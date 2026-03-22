@@ -127,6 +127,20 @@
   .gaps-list { font-size: 13px; color: #7a5060; line-height: 1.8; }
   .gap-item { margin-right: 12px; display: inline-block; }
 
+  /* REDUNDANCY */
+  .redundancy-section { margin-top: 20px; }
+  .redundancy-title {
+    font-size: 11px; letter-spacing: 3px; color: #8a7a30; text-transform: uppercase;
+    margin-bottom: 10px; border-bottom: 1px solid rgba(138,122,48,0.2); padding-bottom: 6px;
+  }
+  .redundancy-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .redundancy-item {
+    background: #1a1800; border: 1px solid #4a3a1055;
+    border-radius: 4px; padding: 8px 12px; font-size: 12px;
+  }
+  .redundancy-cat { color: #c8a840; margin-bottom: 5px; font-size: 12px; }
+  .redundancy-classes { display: flex; flex-wrap: wrap; gap: 4px; }
+
   /* CLASS VIEW */
   .class-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
   .class-card { background: #16141e; border-radius: 4px; padding: 14px 16px; }
@@ -199,42 +213,60 @@ const GROUP_COLORS = {
 };
 
 const SPELL_DATA = {
+  // ── HEALING ────────────────────────────────────────────────────────────
   "Direct Heal":{ desc:"Instant HP restoration on a single target", icon:"💚", group:"Healing", classes:["Cleric","Druid","Paladin","Shaman","Bard","Inquisitor","Beastmaster"] },
   "Heal Over Time":{ desc:"Regeneration tick that restores HP over duration", icon:"🌿", group:"Healing", classes:["Cleric","Druid","Shaman","Paladin","Ranger","Beastmaster"] },
   "Group Heal":{ desc:"Heals all nearby allies simultaneously", icon:"💗", group:"Healing", classes:["Cleric","Druid","Shaman"] },
   "Resurrection":{ desc:"Revives a fallen ally, optionally restoring XP", icon:"✨", group:"Healing", classes:["Cleric","Paladin","Necromancer","Inquisitor"] },
   "Lifetap":{ desc:"Damages target and transfers HP to caster", icon:"🩸", group:"Healing", classes:["Shadow Knight","Necromancer"] },
-  "Stat Buff (STR/STA)":{ desc:"Raises Strength and/or Stamina of target", icon:"💪", group:"Buffs", classes:["Shaman","Beastmaster","Cleric","Enchanter","Bard","Paladin"] },
-  "Haste":{ desc:"Increases melee attack speed", icon:"⚡", group:"Buffs", classes:["Bard","Enchanter","Shaman","Beastmaster"] },
+
+  // ── BUFFS ──────────────────────────────────────────────────────────────
+  "Stat Buff (STR/STA)":{ desc:"Raises Strength and/or Stamina of target", icon:"💪", group:"Buffs", classes:["Shaman","Beastmaster","Cleric","Enchanter","Bard","Paladin","Elementalist"] },
+  "Melee Haste":{ desc:"Increases melee auto-attack speed", icon:"⚡", group:"Buffs", classes:["Bard","Enchanter","Shaman","Beastmaster","Elementalist"] },
+  "Spell Haste":{ desc:"Reduces casting time for spells", icon:"✨", group:"Buffs", classes:["Bard","Elementalist"] },
   "AC / Armor Buff":{ desc:"Increases target's Armor Class", icon:"🛡️", group:"Buffs", classes:["Cleric","Paladin","Shadow Knight","Shaman","Druid","Enchanter","Bard"] },
-  "Damage Shield":{ desc:"Reflects melee damage back to attacker", icon:"🔥", group:"Buffs", classes:["Druid","Wizard","Enchanter","Necromancer"] },
+  "Damage Shield":{ desc:"Reflects melee damage back to attacker", icon:"🔥", group:"Buffs", classes:["Druid","Wizard","Enchanter","Necromancer","Elementalist"] },
   "Movement Speed (SoW)":{ desc:"Greatly increases movement speed (outdoor only)", icon:"🐾", group:"Buffs", classes:["Druid","Shaman","Ranger","Beastmaster"] },
-  "Mana Regen":{ desc:"Increases rate of mana regeneration", icon:"💎", group:"Buffs", classes:["Bard","Enchanter","Cleric","Druid","Shaman"] },
+  "Mana Regen":{ desc:"Increases rate of mana regeneration", icon:"💎", group:"Buffs", classes:["Bard","Enchanter","Cleric","Druid","Shaman","Elementalist"] },
   "Enduring Breath":{ desc:"Allows target to breathe underwater", icon:"🫧", group:"Buffs", classes:["Druid","Shaman","Enchanter","Ranger","Beastmaster"] },
   "Pet Haste / Feral Spirit":{ desc:"Increases pet attack speed or grants berserker buffs", icon:"🐺", group:"Buffs", classes:["Beastmaster","Shaman","Necromancer","Elementalist"] },
   "Weapon Proc / Enchant":{ desc:"Imbues weapon with magical effects or procs", icon:"⚔️", group:"Buffs", classes:["Enchanter","Spellblade","Bard","Shaman","Paladin","Inquisitor"] },
   "Invisibility":{ desc:"Renders target unseen by most creatures", icon:"👻", group:"Buffs", classes:["Enchanter","Wizard","Necromancer","Ranger","Rogue"] },
   "Levitate":{ desc:"Allows target to float above hazards", icon:"🪶", group:"Buffs", classes:["Druid","Cleric","Enchanter","Necromancer","Wizard"] },
+  "Shapeshift":{ desc:"Transforms caster into an animal or elemental form", icon:"🐺", group:"Buffs", classes:["Druid","Beastmaster"] },
+
+  // ── DEBUFFS ────────────────────────────────────────────────────────────
   "Slow":{ desc:"Reduces target's melee attack speed", icon:"🐌", group:"Debuffs", classes:["Shaman","Enchanter","Bard","Necromancer","Beastmaster"] },
-  "Snare":{ desc:"Reduces target's movement speed", icon:"🕸️", group:"Debuffs", classes:["Druid","Ranger","Shaman","Necromancer","Shadow Knight","Enchanter"] },
+  "Snare":{ desc:"Reduces target's movement speed", icon:"🕸️", group:"Debuffs", classes:["Druid","Ranger","Shaman","Necromancer","Shadow Knight","Enchanter","Elementalist"] },
   "Stat Debuff (STR/DEX)":{ desc:"Lowers enemy Strength, Dexterity, or other stats", icon:"📉", group:"Debuffs", classes:["Shaman","Necromancer","Enchanter","Shadow Knight","Inquisitor"] },
   "Resist Debuff":{ desc:"Lowers target's magical resistances", icon:"🎯", group:"Debuffs", classes:["Druid","Shaman","Enchanter","Wizard","Necromancer","Bard"] },
   "Aggro Reduction":{ desc:"Reduces or transfers enemy hatred to caster", icon:"🎭", group:"Debuffs", classes:["Enchanter","Necromancer","Rogue","Bard"] },
+  "Dispel Magic":{ desc:"Removes magical buffs from a target", icon:"❌", group:"Debuffs", classes:["Wizard","Enchanter","Cleric","Inquisitor"] },
+
+  // ── CROWD CONTROL ──────────────────────────────────────────────────────
   "Root":{ desc:"Holds target in place; breaks on damage", icon:"🌳", group:"CC", classes:["Druid","Ranger","Wizard","Enchanter","Elementalist","Necromancer","Shaman"] },
-  "Mez / Stun":{ desc:"Temporarily incapacitates or stuns a target", icon:"😵", group:"CC", classes:["Enchanter","Bard","Paladin","Inquisitor","Wizard","Cleric"] },
+  "Mez / Stun":{ desc:"Temporarily incapacitates or stuns a target", icon:"😵", group:"CC", classes:["Enchanter","Bard","Paladin","Inquisitor","Wizard","Cleric","Elementalist"] },
   "Fear":{ desc:"Causes target to flee in random directions", icon:"😱", group:"CC", classes:["Necromancer","Shadow Knight","Bard","Enchanter"] },
-  "Charm":{ desc:"Enthralls a creature to fight for the caster", icon:"💫", group:"CC", classes:["Enchanter","Bard","Druid","Necromancer"] },
+  "Charm":{ desc:"Enthralls a creature to fight for the caster", icon:"💫", group:"CC", classes:["Enchanter","Bard","Druid","Necromancer","Elementalist"] },
   "Lull / Pacify":{ desc:"Reduces creature aggro radius or calms it", icon:"😴", group:"CC", classes:["Enchanter","Bard","Druid","Cleric","Paladin","Ranger"] },
+
+  // ── DAMAGE ─────────────────────────────────────────────────────────────
   "Direct Damage (Nuke)":{ desc:"Instant burst magical damage on single target", icon:"💥", group:"Damage", classes:["Wizard","Druid","Shaman","Cleric","Necromancer","Shadow Knight","Enchanter","Spellblade","Bard","Ranger","Elementalist","Paladin","Inquisitor"] },
   "Damage Over Time":{ desc:"Applies a recurring damage effect over time", icon:"☠️", group:"Damage", classes:["Druid","Shaman","Necromancer","Shadow Knight","Ranger","Bard","Wizard","Enchanter"] },
   "AoE Damage":{ desc:"Damages multiple targets in an area", icon:"💣", group:"Damage", classes:["Wizard","Druid","Elementalist","Necromancer","Enchanter","Bard"] },
   "Pet / Undead Summon":{ desc:"Summons a combat pet or animated undead servant", icon:"🤖", group:"Damage", classes:["Necromancer","Elementalist","Beastmaster","Shadow Knight","Shaman"] },
+
+  // ── UTILITY ────────────────────────────────────────────────────────────
   "Teleport / Gate":{ desc:"Transports caster or party to another location", icon:"🌀", group:"Utility", classes:["Druid","Wizard","Enchanter","Necromancer"] },
   "Bind Wound / HP Regen":{ desc:"Out-of-combat HP recovery ability or regen buff", icon:"🩹", group:"Utility", classes:["Fighter","Monk","Archer","Ranger","Rogue","Bard","Paladin","Cleric","Druid","Shaman","Inquisitor"] },
   "Feign Death":{ desc:"Causes caster to appear dead, dropping aggro", icon:"💀", group:"Utility", classes:["Monk","Necromancer","Ranger"] },
+  "Tracking":{ desc:"Locates nearby creatures by name and distance", icon:"🧭", group:"Utility", classes:["Ranger","Druid","Bard"] },
   "Sense / Track Undead":{ desc:"Detects undead or other creature types nearby", icon:"🔍", group:"Utility", classes:["Cleric","Paladin","Inquisitor","Ranger","Shadow Knight"] },
   "Cure / Remove Ailment":{ desc:"Removes poison, disease, curse, or other debuffs", icon:"🧪", group:"Utility", classes:["Cleric","Druid","Shaman","Paladin","Ranger","Bard","Inquisitor"] },
   "Taunt / Aggro Gen":{ desc:"Forces enemies to target the caster", icon:"😤", group:"Utility", classes:["Fighter","Paladin","Shadow Knight","Inquisitor","Monk"] },
+  "Stealth / Hide":{ desc:"Conceals the player from enemy detection without magic", icon:"🌑", group:"Utility", classes:["Rogue","Ranger","Monk"] },
+  "Conjure Food & Water":{ desc:"Summons food and water to feed and hydrate the group", icon:"🍞", group:"Utility", classes:["Elementalist","Wizard"] },
+  "Summon Lifestone":{ desc:"Creates a rechargeable HP/mana recovery stone tradeable to party members", icon:"💠", group:"Utility", classes:["Necromancer"] },
 };
 
 // State
@@ -448,6 +480,34 @@ function renderMatrix() {
       html += `<span class="gap-item">${data.icon} ${cat}</span>`;
     });
     html += `</div></div>`;
+  }
+
+  // Redundancy section — only when 2+ classes selected, skip Damage group
+  if (selectedClasses.length >= 2) {
+    const redundant = Object.entries(SPELL_DATA).filter(([, v]) => {
+      if (v.group === 'Damage') return false;
+      const covered = v.classes.filter(c => selectedClasses.includes(c));
+      return covered.length >= 2;
+    });
+
+    if (redundant.length > 0) {
+      html += `<div class="redundancy-section">`;
+      html += `<div class="redundancy-title">⚑ Redundant Coverage</div>`;
+      html += `<div class="redundancy-grid">`;
+      redundant.forEach(([cat, data]) => {
+        const overlap = data.classes.filter(c => selectedClasses.includes(c));
+        const gc = GROUP_COLORS[data.group];
+        html += `<div class="redundancy-item">`;
+        html += `<div class="redundancy-cat">${data.icon} ${cat} <span style="font-size:10px;color:#6a5a30;letter-spacing:1px;">${data.group.toUpperCase()}</span></div>`;
+        html += `<div class="redundancy-classes">`;
+        overlap.forEach(cls => {
+          const color = CLASS_COLORS[cls];
+          html += `<span class="class-tag active" style="background:${color}20;border:1px solid ${color}60;color:${color};">${cls}</span>`;
+        });
+        html += `</div></div>`;
+      });
+      html += `</div></div>`;
+    }
   }
 
   area.innerHTML = html;
